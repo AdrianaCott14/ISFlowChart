@@ -6,6 +6,9 @@ var sProfessional = "";
 var sRejection = "You might want to apply to a different major my friend";
 var iCredits = 0;
 var sUserResponse = "";
+var bPotentialCand = false;
+var bRedFlags = false;
+var bPotentialAdmit = false;
 
 sStudent = prompt("What is your name?");
 sPreReqGrade = prompt("Did you get an A in both IS 201 and IS 303?", "Yes");
@@ -48,16 +51,50 @@ if (bMoveOn === true) {
         if (iCredits < 30) {
             alert("Please apply next year");
             alert("All done!");
+            bPotentialCand = false;
         } 
         else if (iCredits < 60) {
             sUserResponse = prompt("Are those mostly AP and language credits?", "Yes");
             if ((sUserResponse.charAt(0)).toLocaleUpperCase() === "Y") {
                 alert("Please apply next year");
                 alert("All done!");
+                bPotentialCand = false;
             }
         }
+        else if (iCredits > 100) {
+            alert("Consult with the academic advisor");
+            //not sure what to do here, in flowchart it says maybe
+            bPotentialCand = true;
+        }
+        else {
+            bPotentialCand = true;
+        }
+        sUserResponse = prompt("Are there any red flags?", "No");
+        if ((sUserResponse.charAt(0)).toLocaleUpperCase() === "N") {
+            bRedFlags = false;
+        }
+        else {
+            bRedFlags = true;
+            alert("Consult with the academic advisor");
+            bPotentialCand = false;
+            alert("All done!");
+        }
     } 
-    else {
-        alert(sRejection);
-    }
 }
+else {
+    alert(sRejection);
+}
+
+console.log("potential cand " + bPotentialCand);
+
+if (bPotentialCand == true && bRedFlags == false) {
+    console.log("In the last if else statement");
+    alert("You are a potential admit into the Informations Systems program. Congrats!");
+    bPotentialAdmit = true;
+    alert("All done!");
+}
+else {
+    bPotentialAdmit = false;
+    alert("All done!");
+}
+    
